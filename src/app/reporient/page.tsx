@@ -82,8 +82,9 @@ export default function OrientationGuide() {
     setOpenItems((prev) =>
       prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
     );
-    if (!checkedItems[parseInt(val)]) {
-      setCheckedItems((prev) => ({ ...prev, [parseInt(val)]: true }));
+    const index = parseInt(val);
+    if (!checkedItems[index]) {
+      setCheckedItems((prev) => ({ ...prev, [index]: true }));
     }
   };
 
@@ -94,9 +95,12 @@ export default function OrientationGuide() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen">
-      <div className="flex flex-col items-center sticky top-0 bg-white z-40 py-6 shadow-md border-b">
+      <div className="flex flex-col items-center sticky top-0 bg-white z-40 py-4 shadow-md border-b">
         <img src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png" alt="DRS Logo" className="w-28 mb-2" />
-        <h1 className="text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
+      </div>
+
+      <div className="text-center py-4">
+        <h1 className="text-2xl md:text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-30 bg-white py-4">
@@ -144,7 +148,7 @@ export default function OrientationGuide() {
                   phaseRefs.current[phaseName] = el;
                 }}
               >
-                <div className={classNames("sticky z-20 top-[7.5rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
+                <div className={classNames("sticky z-20 top-[7rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
