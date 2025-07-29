@@ -104,11 +104,7 @@ export default function OrientationGuide() {
         </div>
 
         <div className="w-full md:w-2/3">
-          <Accordion
-            type="multiple"
-            className="space-y-6"
-            defaultValue={filteredItems.map((_, i) => i.toString())}
-          >
+          <Accordion type="multiple" className="space-y-6">
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
                 index === 0 || filteredItems[index - 1].phase !== item.phase;
@@ -129,6 +125,7 @@ export default function OrientationGuide() {
                   <AccordionItem
                     value={index.toString()}
                     className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
+                    defaultChecked
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
