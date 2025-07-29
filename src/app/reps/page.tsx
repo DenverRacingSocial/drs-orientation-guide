@@ -12,23 +12,21 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserCircle } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
 import classNames from "classnames";
 
 const phaseColors = [
-  "bg-blue-100 dark:bg-blue-900",
-  "bg-green-100 dark:bg-green-900",
-  "bg-yellow-100 dark:bg-yellow-900",
-  "bg-purple-100 dark:bg-purple-900",
-  "bg-pink-100 dark:bg-pink-900",
-  "bg-indigo-100 dark:bg-indigo-900",
+  "bg-blue-100",
+  "bg-green-100",
+  "bg-yellow-100",
+  "bg-purple-100",
+  "bg-pink-100",
+  "bg-indigo-100",
 ];
 
 export default function OrientationGuide() {
   const [query, setQuery] = useState("");
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
-  const [darkMode, setDarkMode] = useState(false);
   const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -83,16 +81,12 @@ export default function OrientationGuide() {
   };
 
   return (
-    <div className={classNames("max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen", { "bg-gray-900 text-white": darkMode })}>
-      <div className="flex items-center justify-between sticky top-0 bg-white z-30 py-6 shadow-md border-b dark:bg-gray-800 dark:text-white">
+    <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen">
+      <div className="flex items-center justify-between sticky top-0 bg-white z-30 py-6 shadow-md border-b">
         <h1 className="text-4xl font-extrabold">🏁 VIP Orientation Guide (Rep View)</h1>
-        <div className="flex items-center gap-2">
-          <span>🌙</span>
-          <Switch checked={darkMode} onCheckedChange={setDarkMode} />
-        </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-20 bg-white py-4 dark:bg-gray-800">
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-20 bg-white py-4">
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
@@ -102,7 +96,7 @@ export default function OrientationGuide() {
             className="w-full rounded-lg border px-5 py-4 shadow-md text-lg"
           />
 
-          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50 dark:bg-gray-700">
+          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50">
             <h2 className="font-bold mb-2">📌 Phases</h2>
             <ul className="space-y-1">
               {uniquePhases.map((phase, i) => (
@@ -145,7 +139,8 @@ export default function OrientationGuide() {
 
                   <AccordionItem
                     value={index.toString()}
-                    className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200 dark:bg-gray-800"
+                    className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
+                    defaultValue={index.toString()}
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
@@ -165,8 +160,8 @@ export default function OrientationGuide() {
                       </div>
                     </AccordionTrigger>
 
-                    <AccordionContent className="bg-gray-50 px-8 py-6 dark:bg-gray-700">
-                      <Card className="bg-white border-none shadow-none dark:bg-gray-800">
+                    <AccordionContent className="bg-gray-50 px-8 py-6">
+                      <Card className="bg-white border-none shadow-none">
                         <CardContent className="space-y-3">
                           <p>
                             <strong>Notes:</strong>
@@ -179,7 +174,7 @@ export default function OrientationGuide() {
                                 <img
                                   src={item.photo}
                                   alt="Orientation step visual"
-                                  className="rounded-lg max-w-full h-auto border shadow-md dark:border-gray-600"
+                                  className="rounded-lg max-w-full h-auto border shadow-md"
                                 />
                               </div>
                             </div>
