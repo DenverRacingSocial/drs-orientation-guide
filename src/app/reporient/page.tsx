@@ -15,12 +15,12 @@ import { UserCircle } from "lucide-react";
 import classNames from "classnames";
 
 const phaseColors = [
-  "bg-blue-200",
-  "bg-green-200",
-  "bg-yellow-200",
-  "bg-purple-200",
-  "bg-pink-200",
-  "bg-indigo-200",
+  "bg-blue-200 dark:bg-blue-700",
+  "bg-green-200 dark:bg-green-700",
+  "bg-yellow-200 dark:bg-yellow-600",
+  "bg-purple-200 dark:bg-purple-700",
+  "bg-pink-200 dark:bg-pink-700",
+  "bg-indigo-200 dark:bg-indigo-700",
 ];
 
 export default function OrientationGuide() {
@@ -94,8 +94,8 @@ export default function OrientationGuide() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen">
-      <div className="flex flex-col items-center sticky top-0 bg-white z-40 py-4 shadow-md border-b">
+    <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
+      <div className="flex flex-col items-center sticky top-0 bg-white dark:bg-gray-900 z-40 py-4 shadow-md border-b">
         <img src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png" alt="DRS Logo" className="w-28 mb-2" />
       </div>
 
@@ -103,7 +103,7 @@ export default function OrientationGuide() {
         <h1 className="text-2xl md:text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-30 bg-white py-4">
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-30 bg-white dark:bg-gray-900 py-4">
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
@@ -113,7 +113,7 @@ export default function OrientationGuide() {
             className="w-full rounded-lg border px-5 py-4 shadow-md text-lg"
           />
 
-          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50">
+          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50 dark:bg-gray-800">
             <h2 className="font-bold mb-2">📌 Phases</h2>
             <ul className="space-y-1">
               {uniquePhases.map((phase, i) => (
@@ -129,9 +129,9 @@ export default function OrientationGuide() {
             </ul>
           </div>
 
-          <div className="border rounded-md p-3 text-sm bg-gray-100">
+          <div className="border rounded-md p-3 text-sm bg-gray-100 dark:bg-gray-700">
             <h2 className="font-bold mb-2">🧾 Legend</h2>
-            <div className="flex items-center gap-2 text-sm text-gray-800">
+            <div className="flex items-center gap-2 text-sm text-gray-800 dark:text-white">
               <UserCircle className="text-green-600 size-4" /> = Member Performs
             </div>
           </div>
@@ -158,10 +158,10 @@ export default function OrientationGuide() {
                       <AccordionItem
                         key={index}
                         value={itemIndex.toString()}
-                        className="border-l-4 border-blue-600 rounded-xl bg-white shadow hover:shadow-lg transition-shadow duration-300"
+                        className="border-l-4 border-blue-600 rounded-xl bg-white dark:bg-gray-800 shadow hover:shadow-lg transition-shadow duration-300"
                       >
                         <AccordionTrigger
-                          className="px-6 py-5 text-base font-semibold bg-gray-100 hover:bg-gray-200"
+                          className="px-6 py-5 text-base font-semibold bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600"
                           onClick={() => handleToggle(itemIndex.toString())}
                         >
                           <div className="flex items-center gap-4 w-full">
@@ -180,8 +180,8 @@ export default function OrientationGuide() {
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="bg-white px-8 py-6">
-                          <Card className="bg-white border-none shadow-none">
+                        <AccordionContent className="bg-white dark:bg-gray-800 px-8 py-6">
+                          <Card className="bg-white dark:bg-gray-800 border-none shadow-none">
                             <CardContent className="space-y-3">
                               <p>
                                 <strong>Notes:</strong>
