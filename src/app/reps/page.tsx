@@ -11,6 +11,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
+import { CheckCircle2 } from "lucide-react";
 
 export default function OrientationGuide() {
   const [query, setQuery] = useState("");
@@ -55,10 +56,7 @@ export default function OrientationGuide() {
   }, []);
 
   const filteredItems = orientationData.filter((item) => {
-    return (
-      true &&
-      `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase())
-    );
+    return `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase());
   });
 
   const uniquePhases = Array.from(new Set(filteredItems.map((item) => item.phase)));
@@ -106,7 +104,11 @@ export default function OrientationGuide() {
         </div>
 
         <div className="w-full md:w-2/3">
-          <Accordion type="multiple" className="space-y-6" defaultValue={filteredItems.map((_, i) => i.toString())}>
+          <Accordion
+            type="multiple"
+            className="space-y-6"
+            defaultValue={filteredItems.map((_, i) => i.toString())}
+          >
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
                 index === 0 || filteredItems[index - 1].phase !== item.phase;
@@ -135,8 +137,9 @@ export default function OrientationGuide() {
                           onCheckedChange={() => toggleChecked(index)}
                           className="scale-125"
                         />
-                        <div className="text-gray-900 font-bold text-base text-left">
+                        <div className="flex items-center gap-2 text-gray-900 font-bold text-base text-left">
                           {item.section}
+                          {item.memberPerform && <CheckCircle2 className="text-green-600 size-4" title="Member Performs" />}
                         </div>
                       </div>
                     </AccordionTrigger>
@@ -144,9 +147,6 @@ export default function OrientationGuide() {
                     <AccordionContent className="bg-gray-50 px-8 py-6">
                       <Card className="bg-white border-none shadow-none">
                         <CardContent className="space-y-3 text-gray-700">
-                          <p>
-                            <strong>Member Perform:</strong> {item.memberPerform ? "✅ Yes" : "❌ No"}
-                          </p>
                           <p>
                             <strong>Notes:</strong>
                             <br /> {item.notes}
