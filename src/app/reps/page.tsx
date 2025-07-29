@@ -83,7 +83,7 @@ export default function OrientationGuide() {
   };
 
   return (
-    <div className={classNames("max-w-7xl mx-auto px-4 py-10 transition-all duration-300", { "bg-gray-900 text-white": darkMode })}>
+    <div className={classNames("max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen", { "bg-gray-900 text-white": darkMode })}>
       <div className="flex items-center justify-between sticky top-0 bg-white z-30 py-6 shadow-md border-b dark:bg-gray-800 dark:text-white">
         <h1 className="text-4xl font-extrabold">🏁 VIP Orientation Guide (Rep View)</h1>
         <div className="flex items-center gap-2">
@@ -120,7 +120,11 @@ export default function OrientationGuide() {
         </div>
 
         <div className="w-full md:w-2/3">
-          <Accordion type="multiple" className="space-y-6" defaultValue={filteredItems.map((_, i) => i.toString())}>
+          <Accordion
+            type="multiple"
+            className="space-y-6"
+            defaultValue={filteredItems.map((_, i) => i.toString())} // Ensure all are open
+          >
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
                 index === 0 || filteredItems[index - 1].phase !== item.phase;
@@ -145,17 +149,17 @@ export default function OrientationGuide() {
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
+                        {item.memberPerform && (
+                          <span title="Member Performs">
+                            <UserCircle className="text-green-600 size-4" />
+                          </span>
+                        )}
                         <Checkbox
                           checked={checkedItems[index] || false}
                           onCheckedChange={() => toggleChecked(index)}
                           className="scale-125"
                         />
-                        <div className="flex items-center gap-2 font-bold text-base text-left">
-                          {item.memberPerform && (
-                            <span title="Member Performs">
-                              <UserCircle className="text-green-600 size-4" />
-                            </span>
-                          )}
+                        <div className="font-bold text-base text-left">
                           {item.section}
                         </div>
                       </div>
