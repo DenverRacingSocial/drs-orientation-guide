@@ -132,10 +132,9 @@ export default function OrientationGuide() {
                 key={phaseName}
                 ref={(el) => {
                   phaseRefs.current[phaseName] = el;
-                  return undefined;
                 }}
               >
-                <div className={classNames("sticky z-10 top-[11rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
+                <div className={classNames("sticky z-10 top-[6rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
