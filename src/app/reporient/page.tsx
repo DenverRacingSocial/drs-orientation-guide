@@ -94,8 +94,8 @@ export default function OrientationGuide() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-gray-950 text-white">
-      <div className="sticky top-0 z-50 bg-gray-950 py-2 flex justify-center">
+    <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-white text-black dark:bg-gray-950 dark:text-white">
+      <div className="sticky top-0 z-50 bg-white dark:bg-gray-950 py-2 flex justify-center">
         <img
           src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png"
           alt="DRS Logo"
@@ -107,24 +107,24 @@ export default function OrientationGuide() {
         <h1 className="text-md md:text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-28 md:top-32 z-30 bg-gray-950 py-4">
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-28 md:top-32 z-30 bg-white dark:bg-gray-950 py-4">
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
             placeholder="🔍 Search notes or content..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full rounded-lg border px-5 py-4 shadow-md text-lg bg-gray-800 text-white"
+            className="w-full rounded-lg border px-5 py-4 shadow-md text-lg bg-gray-100 text-black dark:bg-gray-800 dark:text-white"
           />
 
-          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-800">
+          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-100 dark:bg-gray-800">
             <h2 className="font-bold mb-2">📌 Phases</h2>
             <ul className="space-y-1">
               {uniquePhases.map((phase, i) => (
                 <li key={i}>
                   <button
                     onClick={() => scrollToPhase(phase)}
-                    className="text-blue-400 hover:underline w-full text-left"
+                    className="text-blue-600 dark:text-blue-400 hover:underline w-full text-left"
                   >
                     {phase}
                   </button>
@@ -133,10 +133,10 @@ export default function OrientationGuide() {
             </ul>
           </div>
 
-          <div className="border rounded-md p-3 text-sm bg-gray-800">
+          <div className="border rounded-md p-3 text-sm bg-gray-100 dark:bg-gray-800">
             <h2 className="font-bold mb-2">🧾 Legend</h2>
-            <div className="flex items-center gap-2 text-sm text-white">
-              <UserCircle className="text-green-400 size-4" /> = Member Performs
+            <div className="flex items-center gap-2 text-sm">
+              <UserCircle className="text-green-600 dark:text-green-400 size-4" /> = Member Performs
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function OrientationGuide() {
                   phaseRefs.current[phaseName] = el;
                 }}
               >
-                <div className={classNames("sticky z-30 top-28 md:top-32 px-4 py-2 rounded font-semibold border mb-4 text-lg text-white", phaseColor)}>
+                <div className={classNames("sticky z-30 top-28 md:top-32 px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
@@ -162,16 +162,16 @@ export default function OrientationGuide() {
                       <AccordionItem
                         key={index}
                         value={itemIndex.toString()}
-                        className="border-l-4 border-blue-400 rounded-xl bg-gray-900 shadow hover:shadow-lg transition-shadow duration-300"
+                        className="border-l-4 border-blue-400 rounded-xl bg-gray-100 dark:bg-gray-900 shadow hover:shadow-lg transition-shadow duration-300"
                       >
                         <AccordionTrigger
-                          className="px-6 py-5 text-base font-semibold bg-gray-800 hover:bg-gray-700"
+                          className="px-6 py-5 text-base font-semibold bg-gray-200 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
                           onClick={() => handleToggle(itemIndex.toString())}
                         >
                           <div className="flex items-center gap-4 w-full">
                             {item.memberPerform && (
                               <span title="Member Performs">
-                                <UserCircle className="text-green-400 size-4" />
+                                <UserCircle className="text-green-600 dark:text-green-400 size-4" />
                               </span>
                             )}
                             <Checkbox
@@ -184,9 +184,9 @@ export default function OrientationGuide() {
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="bg-gray-900 px-8 py-6">
-                          <Card className="bg-gray-900 border-none shadow-none">
-                            <CardContent className="space-y-3 text-white">
+                        <AccordionContent className="bg-gray-100 dark:bg-gray-900 px-8 py-6">
+                          <Card className="bg-transparent border-none shadow-none">
+                            <CardContent className="space-y-3">
                               <p>
                                 <strong>Notes:</strong>
                                 <br /> {item.notes}
@@ -209,7 +209,7 @@ export default function OrientationGuide() {
                                     href={item.video}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="text-blue-400 underline"
+                                    className="text-blue-600 dark:text-blue-400 underline"
                                   >
                                     🎥 Watch Video
                                   </a>
@@ -223,7 +223,7 @@ export default function OrientationGuide() {
                                         href={res}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="text-blue-400 underline"
+                                        className="text-blue-600 dark:text-blue-400 underline"
                                       >
                                         🔗 Additional Resource {i + 1}
                                       </a>
