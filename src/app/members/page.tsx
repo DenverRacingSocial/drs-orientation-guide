@@ -52,9 +52,7 @@ export default function MemberOrientationGuide() {
                 notes: row["Detailed Steps/Notes"] ?? "",
                 photos: row["Photo"]?.split(",").map((p: string) => p.trim()) ?? [],
                 video: row["Video"] ?? "",
-                resource1: row["Additional Resource 1"] ?? "",
-                resource2: row["Additional Resource 2"] ?? "",
-                resource3: row["Additional Resource 3"] ?? "",
+                resources: [row["Additional Resource 1"], row["Additional Resource 2"], row["Additional Resource 3"]].filter(Boolean),
                 tags: row["Tags"]?.toLowerCase().split(",").map((t: string) => t.trim()) ?? [],
                 location: row["Location"]?.toLowerCase().trim() ?? "",
               }));
@@ -116,7 +114,7 @@ export default function MemberOrientationGuide() {
           />
 
           <div className="flex gap-2 mt-2">
-            {['all', 'centennial', 'lafayette'].map((loc) => (
+            {["all", "centennial", "lafayette"].map((loc) => (
               <button
                 key={loc}
                 onClick={() => setSelectedLocation(loc)}
@@ -184,7 +182,7 @@ export default function MemberOrientationGuide() {
                               }}
                               className="text-sm text-yellow-400 hover:text-yellow-300"
                             >
-                              {flaggedItems[itemIndex] ? "⚑ Flagged" : "⚐ Flag"}
+                              {flaggedItems[itemIndex] ? "🔖 Bookmarked" : "🔖 Bookmark"}
                             </button>
                           </div>
                         </AccordionTrigger>
@@ -223,20 +221,24 @@ export default function MemberOrientationGuide() {
                                   </a>
                                 </p>
                               )}
-                              {[item.resource1, item.resource2, item.resource3].map(
-                                (res, i) =>
-                                  res && (
-                                    <p key={i}>
-                                      <a
-                                        href={res}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-400 underline"
-                                      >
-                                        🔗 Additional Resource {i + 1}
-                                      </a>
-                                    </p>
-                                  )
+                              {item.resources.length > 0 && (
+                                <div>
+                                  <strong>Resources:</strong>
+                                  <ul className="list-disc list-inside space-y-1 mt-1">
+                                    {item.resources.map((res, i) => (
+                                      <li key={i}>
+                                        <a
+                                          href={res}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-blue-400 underline"
+                                        >
+                                          🔗 {res}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
                               )}
                               {item.tags.length > 0 && (
                                 <p className="text-sm text-gray-400 pt-2">
