@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Papa from "papaparse";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,6 +16,7 @@ export default function OrientationGuide() {
   const [query, setQuery] = useState("");
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+  const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
     fetch(
@@ -52,71 +53,151 @@ export default function OrientationGuide() {
   }, []);
 
   const filteredItems = orientationData.filter((item) => {
-    const content = `${item.phase} ${item.section} ${item.notes}`.toLowerCase();
-    return content.includes(query.toLowerCase());
+    return (
+      (!item.customerFacing || item.memberPerform) &&
+      `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase())
+    );
   });
+
+  const uniquePhases = Array.from(new Set(filteredItems.map((item) => item.phase)));
 
   const toggleChecked = (index: number) => {
     setCheckedItems((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
+  const scrollToPhase = (phase: string) => {
+    const element = phaseRefs.current[phase];
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6">
-      <h1 className="text-3xl font-semibold mb-6 sticky top-0 bg-white z-20 py-4 shadow-md border-b">
+    <div className="max-w-7xl mx-auto px-4 py-10">
+      <h1 className="text-4xl font-extrabold mb-8 sticky top-0 bg-white z-30 py-6 shadow-md border-b">
         🏁 VIP Orientation Guide (Rep View)
       </h1>
 
-      <div className="mb-6">
-        <Input
-          type="text"
-          placeholder="🔍 Search phases, steps, or notes..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-md border px-4 py-3 shadow-sm"
-        />
-      </div>
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-20 bg-white py-4">
+        <div className="w-full md:w-1/3 space-y-4">
+          <Input
+            type="text"
+            placeholder="🔍 Search steps or content..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full rounded-lg border px-5 py-4 shadow-md text-lg"
+          />
 
-      <Accordion type="multiple" className="space-y-3">
-        {filteredItems.map((item, index) => (
-          <AccordionItem
-            value={index.toString()}
-            key={index}
-            className="border rounded-lg shadow-sm bg-white">
-            <AccordionTrigger className="p-4 text-left text-lg font-medium flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Checkbox
-                  checked={checkedItems[index] || false}
-                  onCheckedChange={() => toggleChecked(index)}
-                />
-                <div>
-                  <div className="font-semibold text-gray-800">{item.phase}</div>
-                  <div className="text-sm text-gray-500">{item.section}</div>
-                </div>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="bg-gray-50 px-6 py-4">
-              <Card className="bg-white">
-                <CardContent className="space-y-3 py-4">
-                  <p><strong>Customer-Facing:</strong> {item.customerFacing ? "✅ Yes" : "❌ No"}</p>
-                  <p><strong>Member Perform:</strong> {item.memberPerform ? "✅ Yes" : "❌ No"}</p>
-                  <p><strong>Steps:</strong> {item.notes}</p>
-                  {item.photo && <p><a href={item.photo} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">📷 Photo</a></p>}
-                  {item.video && <p><a href={item.video} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">🎥 Video</a></p>}
-                  {[item.resource1, item.resource2, item.resource3].map((res, i) =>
-                    res && (
-                      <p key={i}>
-                        <a href={res} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                          🔗 Additional Resource {i + 1}
-                        </a>
-                      </p>
-                    )
+          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50">
+            <h2 className="font-bold mb-2">📌 Phases</h2>
+            <ul className="space-y-1">
+              {uniquePhases.map((phase, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => scrollToPhase(phase)}
+                    className="text-blue-600 hover:underline w-full text-left"
+                  >
+                    {phase}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="w-full md:w-2/3">
+          <Accordion type="multiple" className="space-y-6">
+            {filteredItems.map((item, index) => {
+              const isFirstOfPhase =
+                index === 0 || filteredItems[index - 1].phase !== item.phase;
+
+              return (
+                <div
+                  key={index}
+                  ref={(el) => {
+                    if (isFirstOfPhase) phaseRefs.current[item.phase] = el;
+                  }}
+                >
+                  {isFirstOfPhase && (
+                    <div className="sticky top-[11rem] z-10 bg-gray-100 px-4 py-2 rounded font-semibold text-gray-700 border mb-2">
+                      {item.phase}
+                    </div>
                   )}
-                </CardContent>
-              </Card>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+
+                  <AccordionItem
+                    value={index.toString()}
+                    className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
+                  >
+                    <AccordionTrigger className="px-6 py-5">
+                      <div className="flex items-center gap-4 w-full">
+                        <Checkbox
+                          checked={checkedItems[index] || false}
+                          onCheckedChange={() => toggleChecked(index)}
+                          className="scale-125"
+                        />
+                        <div className="text-gray-900 font-bold text-base text-left">
+                          {item.section}
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+
+                    <AccordionContent className="bg-gray-50 px-8 py-6">
+                      <Card className="bg-white border-none shadow-none">
+                        <CardContent className="space-y-3 text-gray-700">
+                          <p>
+                            <strong>Member Perform:</strong> {item.memberPerform ? "✅ Yes" : "❌ No"}
+                          </p>
+                          <p>
+                            <strong>Steps:</strong>
+                            <br /> {item.notes}
+                          </p>
+                          {item.photo && (
+                            <p>
+                              <a
+                                href={item.photo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                              >
+                                📷 View Photo
+                              </a>
+                            </p>
+                          )}
+                          {item.video && (
+                            <p>
+                              <a
+                                href={item.video}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-600 underline"
+                              >
+                                🎥 Watch Video
+                              </a>
+                            </p>
+                          )}
+                          {[item.resource1, item.resource2, item.resource3].map(
+                            (res, i) =>
+                              res && (
+                                <p key={i}>
+                                  <a
+                                    href={res}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 underline"
+                                  >
+                                    🔗 Additional Resource {i + 1}
+                                  </a>
+                                </p>
+                              )
+                          )}
+                        </CardContent>
+                      </Card>
+                    </AccordionContent>
+                  </AccordionItem>
+                </div>
+              );
+            })}
+          </Accordion>
+        </div>
+      </div>
     </div>
   );
 }
