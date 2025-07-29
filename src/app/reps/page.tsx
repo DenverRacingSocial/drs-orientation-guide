@@ -11,7 +11,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CheckCircle2 } from "lucide-react";
+import { UserCircle } from "lucide-react";
 
 export default function OrientationGuide() {
   const [query, setQuery] = useState("");
@@ -139,7 +139,11 @@ export default function OrientationGuide() {
                         />
                         <div className="flex items-center gap-2 text-gray-900 font-bold text-base text-left">
                           {item.section}
-                          {item.memberPerform && <CheckCircle2 className="text-green-600 size-4" title="Member Performs" />}
+                          {item.memberPerform && (
+                            <span title="Member Performs">
+                              <UserCircle className="text-green-600 size-4" />
+                            </span>
+                          )}
                         </div>
                       </div>
                     </AccordionTrigger>
