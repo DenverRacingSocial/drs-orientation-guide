@@ -142,6 +142,7 @@ export default function OrientationGuide() {
                   <AccordionItem
                     value={index.toString()}
                     className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200 dark:bg-gray-800"
+                    defaultChecked
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
