@@ -56,8 +56,9 @@ export default function OrientationGuide() {
 
   const filteredItems = orientationData.filter((item) => {
     return (
-      item.memberPerform || !item.customerFacing
-    ) && `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase());
+      true && // show everything on rep version
+      `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase())
+    );
   });
 
   const uniquePhases = Array.from(new Set(filteredItems.map((item) => item.phase)));
