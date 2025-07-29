@@ -41,7 +41,7 @@ export default function OrientationGuide() {
           skipEmptyLines: true,
           complete: (results) => {
             const cleaned = results.data
-              .filter((row: any) => row["Phase"] && row["Section/Step"]) // Ignore blank rows
+              .filter((row: any) => row["Phase"] && row["Section/Step"])
               .map((row: any) => ({
                 phase: row["Phase"] ?? "",
                 section: row["Section/Step"] ?? "",
@@ -119,7 +119,7 @@ export default function OrientationGuide() {
           <Accordion
             type="multiple"
             className="space-y-6"
-            value={openItems} // Control expanded items
+            value={openItems}
             onValueChange={(vals) => setOpenItems(vals)}
           >
             {filteredItems.map((item, index) => {
