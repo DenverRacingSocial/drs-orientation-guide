@@ -12,11 +12,23 @@ import {
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { UserCircle } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import classNames from "classnames";
+
+const phaseColors = [
+  "bg-blue-100",
+  "bg-green-100",
+  "bg-yellow-100",
+  "bg-purple-100",
+  "bg-pink-100",
+  "bg-indigo-100",
+];
 
 export default function OrientationGuide() {
   const [query, setQuery] = useState("");
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+  const [darkMode, setDarkMode] = useState(false);
   const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -71,12 +83,16 @@ export default function OrientationGuide() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-extrabold mb-8 sticky top-0 bg-white z-30 py-6 shadow-md border-b">
-        🏁 VIP Orientation Guide (Rep View)
-      </h1>
+    <div className={classNames("max-w-7xl mx-auto px-4 py-10 transition-all duration-300", { "bg-gray-900 text-white": darkMode })}>
+      <div className="flex items-center justify-between sticky top-0 bg-white z-30 py-6 shadow-md border-b dark:bg-gray-800 dark:text-white">
+        <h1 className="text-4xl font-extrabold">🏁 VIP Orientation Guide (Rep View)</h1>
+        <div className="flex items-center gap-2">
+          <span>🌙</span>
+          <Switch checked={darkMode} onCheckedChange={setDarkMode} />
+        </div>
+      </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-20 bg-white py-4">
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-20 bg-white py-4 dark:bg-gray-800">
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
@@ -86,7 +102,7 @@ export default function OrientationGuide() {
             className="w-full rounded-lg border px-5 py-4 shadow-md text-lg"
           />
 
-          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50">
+          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-50 dark:bg-gray-700">
             <h2 className="font-bold mb-2">📌 Phases</h2>
             <ul className="space-y-1">
               {uniquePhases.map((phase, i) => (
@@ -108,6 +124,7 @@ export default function OrientationGuide() {
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
                 index === 0 || filteredItems[index - 1].phase !== item.phase;
+              const phaseColor = phaseColors[uniquePhases.indexOf(item.phase) % phaseColors.length];
 
               return (
                 <div
@@ -117,15 +134,15 @@ export default function OrientationGuide() {
                   }}
                 >
                   {isFirstOfPhase && (
-                    <div className="sticky top-[11rem] z-10 bg-gray-100 px-4 py-2 rounded font-semibold text-gray-700 border mb-2">
+                    <div className={classNames("sticky top-[11rem] z-10 px-4 py-2 rounded font-semibold border mb-2", phaseColor)}>
                       {item.phase}
                     </div>
                   )}
 
                   <AccordionItem
                     value={index.toString()}
-                    className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
-                    defaultChecked
+                    className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200 dark:bg-gray-800"
+                    defaultOpen
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
@@ -134,7 +151,7 @@ export default function OrientationGuide() {
                           onCheckedChange={() => toggleChecked(index)}
                           className="scale-125"
                         />
-                        <div className="flex items-center gap-2 text-gray-900 font-bold text-base text-left">
+                        <div className="flex items-center gap-2 font-bold text-base text-left">
                           {item.section}
                           {item.memberPerform && (
                             <span title="Member Performs">
@@ -145,9 +162,9 @@ export default function OrientationGuide() {
                       </div>
                     </AccordionTrigger>
 
-                    <AccordionContent className="bg-gray-50 px-8 py-6">
-                      <Card className="bg-white border-none shadow-none">
-                        <CardContent className="space-y-3 text-gray-700">
+                    <AccordionContent className="bg-gray-50 px-8 py-6 dark:bg-gray-700">
+                      <Card className="bg-white border-none shadow-none dark:bg-gray-800">
+                        <CardContent className="space-y-3">
                           <p>
                             <strong>Notes:</strong>
                             <br /> {item.notes}
