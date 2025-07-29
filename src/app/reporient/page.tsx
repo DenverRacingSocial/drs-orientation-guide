@@ -78,6 +78,12 @@ export default function OrientationGuide() {
     setOpenItems((prev) => prev.filter((val) => val !== index.toString()));
   };
 
+  const handleToggle = (val: string) => {
+    setOpenItems((prev) =>
+      prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
+    );
+  };
+
   const scrollToPhase = (phase: string) => {
     const element = phaseRefs.current[phase];
     if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -85,11 +91,11 @@ export default function OrientationGuide() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen">
-      <div className="flex items-center justify-between sticky top-0 bg-white z-30 py-6 shadow-md border-b">
+      <div className="flex items-center justify-between sticky top-0 bg-white z-40 py-6 shadow-md border-b">
         <h1 className="text-4xl font-extrabold">🏁 VIP Orientation Guide (Rep View)</h1>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-20 bg-white py-4">
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-30 bg-white py-4">
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
@@ -134,7 +140,7 @@ export default function OrientationGuide() {
                   phaseRefs.current[phaseName] = el;
                 }}
               >
-                <div className={classNames("sticky z-10 top-[6rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
+                <div className={classNames("sticky z-20 top-[7.5rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
@@ -146,7 +152,10 @@ export default function OrientationGuide() {
                         value={itemIndex.toString()}
                         className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
                       >
-                        <AccordionTrigger className="px-6 py-5">
+                        <AccordionTrigger
+                          className="px-6 py-5"
+                          onClick={() => handleToggle(itemIndex.toString())}
+                        >
                           <div className="flex items-center gap-4 w-full">
                             {item.memberPerform && (
                               <span title="Member Performs">
