@@ -28,7 +28,6 @@ export default function OrientationGuide() {
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
   const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
-  const [openItems, setOpenItems] = useState<string[]>([]);
 
   useEffect(() => {
     fetch(
@@ -55,7 +54,6 @@ export default function OrientationGuide() {
                 resource3: row["Additional Resource 3"] ?? "",
               }));
             setOrientationData(cleaned);
-            setOpenItems(cleaned.map((_, i) => i.toString()));
           },
           error: (err: unknown) => {
             console.error("CSV parse error:", err);
@@ -127,11 +125,17 @@ export default function OrientationGuide() {
             const itemsInPhase = filteredItems.filter((item) => item.phase === phaseName);
             const phaseColor = phaseColors[uniquePhases.indexOf(phaseName) % phaseColors.length];
             return (
-              <div key={phaseName} ref={(el) => (phaseRefs.current[phaseName] = el)}>
+              <div
+                key={phaseName}
+                ref={(el) => {
+                  phaseRefs.current[phaseName] = el;
+                  return undefined;
+                }}
+              >
                 <div className={classNames("sticky z-10 top-[11rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
                   {phaseName}
                 </div>
-                <Accordion type="multiple" className="space-y-6" value={openItems}>
+                <Accordion type="multiple" className="space-y-6" value={itemsInPhase.map((item) => orientationData.indexOf(item).toString())}>
                   {itemsInPhase.map((item, index) => (
                     <AccordionItem
                       key={index}
