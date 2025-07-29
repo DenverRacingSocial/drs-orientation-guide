@@ -196,14 +196,15 @@ export default function MemberOrientationGuide() {
                               {item.photos.length > 0 && (
                                 <div>
                                   <strong>Photos:</strong>
-                                  <div className="mt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  <div className="mt-2 overflow-x-auto whitespace-nowrap space-x-4 pb-2">
                                     {item.photos.map((photo: string, i: number) => (
                                       <img
                                         key={i}
                                         src={photo}
                                         alt={`Step Visual ${i + 1}`}
                                         onClick={() => setFullscreenImage(photo)}
-                                        className="rounded-lg max-w-full h-auto border shadow-md cursor-pointer hover:scale-105 transition-transform"
+                                        className="inline-block h-auto max-h-60 rounded-lg border shadow-md cursor-pointer hover:scale-105 transition-transform"
+                                        style={{ maxWidth: "85%" }}
                                       />
                                     ))}
                                   </div>
@@ -225,7 +226,7 @@ export default function MemberOrientationGuide() {
                                 <div>
                                   <strong>Resources:</strong>
                                   <ul className="list-disc list-inside space-y-1 mt-1">
-                                    {item.resources.map((res: string, i: number) => (
+                                    {item.resources.map((res, i) => (
                                       <li key={i}>
                                         <a
                                           href={res}
