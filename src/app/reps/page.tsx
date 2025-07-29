@@ -42,7 +42,7 @@ export default function OrientationGuide() {
             }));
             setOrientationData(cleaned);
           },
-          error: (err) => {
+          error: (err: Error) => {
             console.error("CSV parse error:", err);
           },
         });
@@ -54,9 +54,8 @@ export default function OrientationGuide() {
 
   const filteredItems = orientationData.filter((item) => {
     return (
-      (!item.customerFacing || item.memberPerform) &&
-      `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase())
-    );
+      item.memberPerform || !item.customerFacing
+    ) && `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase());
   });
 
   const uniquePhases = Array.from(new Set(filteredItems.map((item) => item.phase)));
