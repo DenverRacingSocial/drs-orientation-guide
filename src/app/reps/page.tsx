@@ -16,12 +16,12 @@ import { Switch } from "@/components/ui/switch";
 import classNames from "classnames";
 
 const phaseColors = [
-  "bg-blue-100",
-  "bg-green-100",
-  "bg-yellow-100",
-  "bg-purple-100",
-  "bg-pink-100",
-  "bg-indigo-100",
+  "bg-blue-100 dark:bg-blue-900",
+  "bg-green-100 dark:bg-green-900",
+  "bg-yellow-100 dark:bg-yellow-900",
+  "bg-purple-100 dark:bg-purple-900",
+  "bg-pink-100 dark:bg-pink-900",
+  "bg-indigo-100 dark:bg-indigo-900",
 ];
 
 export default function OrientationGuide() {
@@ -142,7 +142,6 @@ export default function OrientationGuide() {
                   <AccordionItem
                     value={index.toString()}
                     className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200 dark:bg-gray-800"
-                    defaultChecked
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
@@ -169,17 +168,17 @@ export default function OrientationGuide() {
                             <strong>Notes:</strong>
                             <br /> {item.notes}
                           </p>
-                          {item.photo && (
-                            <p>
-                              <a
-                                href={item.photo}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 underline"
-                              >
-                                📷 View Photo
-                              </a>
-                            </p>
+                          {item.photo && item.photo.match(/^https?:\/\//i) && (
+                            <div>
+                              <strong>Photo:</strong>
+                              <div className="mt-2">
+                                <img
+                                  src={item.photo}
+                                  alt="Orientation step visual"
+                                  className="rounded-lg max-w-full h-auto border shadow-md dark:border-gray-600"
+                                />
+                              </div>
+                            </div>
                           )}
                           {item.video && (
                             <p>
