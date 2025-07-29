@@ -15,12 +15,12 @@ import { UserCircle } from "lucide-react";
 import classNames from "classnames";
 
 const phaseColors = [
-  "bg-blue-100",
-  "bg-green-100",
-  "bg-yellow-100",
-  "bg-purple-100",
-  "bg-pink-100",
-  "bg-indigo-100",
+  "bg-blue-200",
+  "bg-green-200",
+  "bg-yellow-200",
+  "bg-purple-200",
+  "bg-pink-200",
+  "bg-indigo-200",
 ];
 
 export default function OrientationGuide() {
@@ -140,7 +140,7 @@ export default function OrientationGuide() {
                   phaseRefs.current[phaseName] = el;
                 }}
               >
-                <div className={classNames("sticky z-20 top-[7.5rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
+                <div className={classNames("sticky z-20 top-[7.5rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
@@ -150,10 +150,10 @@ export default function OrientationGuide() {
                       <AccordionItem
                         key={index}
                         value={itemIndex.toString()}
-                        className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
+                        className="border-l-4 border-blue-600 rounded-xl bg-white shadow hover:shadow-lg transition-shadow duration-300"
                       >
                         <AccordionTrigger
-                          className="px-6 py-5"
+                          className="px-6 py-5 text-base font-semibold bg-gray-100 hover:bg-gray-200"
                           onClick={() => handleToggle(itemIndex.toString())}
                         >
                           <div className="flex items-center gap-4 w-full">
@@ -167,12 +167,12 @@ export default function OrientationGuide() {
                               onCheckedChange={() => toggleChecked(itemIndex)}
                               className="scale-125"
                             />
-                            <div className="font-bold text-base text-left">
+                            <div className="text-left text-base font-bold">
                               {item.section}
                             </div>
                           </div>
                         </AccordionTrigger>
-                        <AccordionContent className="bg-gray-50 px-8 py-6">
+                        <AccordionContent className="bg-white px-8 py-6">
                           <Card className="bg-white border-none shadow-none">
                             <CardContent className="space-y-3">
                               <p>
