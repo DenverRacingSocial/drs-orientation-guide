@@ -28,18 +28,20 @@ export default function OrientationGuide() {
           header: true,
           skipEmptyLines: true,
           complete: (results) => {
-            const cleaned = results.data.map((row: any) => ({
-              phase: row["Phase"] ?? "",
-              section: row["Section/Step"] ?? "",
-              customerFacing: row["Customer-Facing?"]?.toLowerCase() === "yes",
-              memberPerform: row["Member Perform"]?.toLowerCase() === "yes",
-              notes: row["Detailed Steps/Notes"] ?? "",
-              photo: row["Photo"] ?? "",
-              video: row["Video"] ?? "",
-              resource1: row["Additional Resource 1"] ?? "",
-              resource2: row["Additional Resource 2"] ?? "",
-              resource3: row["Additional Resource 3"] ?? "",
-            }));
+            const cleaned = results.data
+              .filter((row: any) => row["Phase"] && row["Section/Step"]) // Ignore blank rows
+              .map((row: any) => ({
+                phase: row["Phase"] ?? "",
+                section: row["Section/Step"] ?? "",
+                customerFacing: row["Customer-Facing?"]?.toLowerCase() === "yes",
+                memberPerform: row["Member Perform"]?.toLowerCase() === "yes",
+                notes: row["Detailed Steps/Notes"] ?? "",
+                photo: row["Photo"] ?? "",
+                video: row["Video"] ?? "",
+                resource1: row["Additional Resource 1"] ?? "",
+                resource2: row["Additional Resource 2"] ?? "",
+                resource3: row["Additional Resource 3"] ?? "",
+              }));
             setOrientationData(cleaned);
           },
           error: (err: Error) => {
