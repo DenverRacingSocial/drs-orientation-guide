@@ -225,7 +225,7 @@ export default function MemberOrientationGuide() {
                                 <div>
                                   <strong>Resources:</strong>
                                   <ul className="list-disc list-inside space-y-1 mt-1">
-                                    {item.resources.map((res, i) => (
+                                    {item.resources.map((res: string, i: number) => (
                                       <li key={i}>
                                         <a
                                           href={res}
