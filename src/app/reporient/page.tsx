@@ -23,11 +23,14 @@ const phaseColors = [
   "bg-gradient-to-r from-pink-600 to-pink-800",
 ];
 
-export default function OrientationGuide() {
+export default function RepOrientationGuide() {
   const [query, setQuery] = useState("");
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
   const [openItems, setOpenItems] = useState<string[]>([]);
+  const [selectedLocation, setSelectedLocation] = useState("all");
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [flaggedItems, setFlaggedItems] = useState<{ [key: number]: boolean }>({});
   const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -48,11 +51,15 @@ export default function OrientationGuide() {
                 customerFacing: row["Customer-Facing?"]?.toLowerCase() === "yes",
                 memberPerform: row["Member Perform"]?.toLowerCase() === "yes",
                 notes: row["Detailed Steps/Notes"] ?? "",
-                photo: row["Photo"] ?? "",
+                photos: row["Photo"]?.split(",").map((p: string) => p.trim()) ?? [],
                 video: row["Video"] ?? "",
-                resource1: row["Additional Resource 1"] ?? "",
-                resource2: row["Additional Resource 2"] ?? "",
-                resource3: row["Additional Resource 3"] ?? "",
+                resources: [
+                  row["Additional Resource 1"],
+                  row["Additional Resource 2"],
+                  row["Additional Resource 3"],
+                ].filter(Boolean),
+                tags: row["Tags"]?.toLowerCase().split(",").map((t: string) => t.trim()) ?? [],
+                location: row["Location"]?.toLowerCase().trim() ?? "",
               }));
             setOrientationData(cleaned);
             setOpenItems(cleaned.map((_, index) => index.toString()));
@@ -68,14 +75,26 @@ export default function OrientationGuide() {
   }, []);
 
   const filteredItems = orientationData.filter((item) => {
-    return `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase());
+    const searchText = `${item.phase} ${item.section} ${item.notes}`.toLowerCase();
+    const tagMatch = item.tags?.some((tag: string) => tag.includes(query.toLowerCase()));
+    const locationMatch = selectedLocation === "all" || !item.location || item.location === selectedLocation;
+    return (searchText.includes(query.toLowerCase()) || tagMatch) && locationMatch;
   });
 
   const uniquePhases = Array.from(new Set(filteredItems.map((item) => item.phase)));
 
+  const scrollToPhase = (phase: string) => {
+    const element = phaseRefs.current[phase];
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const toggleChecked = (index: number) => {
     setCheckedItems((prev) => ({ ...prev, [index]: !prev[index] }));
     setOpenItems((prev) => prev.filter((val) => val !== index.toString()));
+  };
+
+  const toggleFlag = (index: number) => {
+    setFlaggedItems((prev) => ({ ...prev, [index]: !prev[index] }));
   };
 
   const handleToggle = (val: string) => {
@@ -88,19 +107,16 @@ export default function OrientationGuide() {
     }
   };
 
-  const scrollToPhase = (phase: string) => {
-    const element = phaseRefs.current[phase];
-    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
     <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-gray-950 text-white">
       <div className="sticky top-0 z-50 bg-white py-2 flex justify-center">
-        <img
-          src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png"
-          alt="DRS Logo"
-          className="w-20 md:w-24"
-        />
+        <a href="#">
+          <img
+            src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png"
+            alt="DRS Logo"
+            className="w-20 md:w-24 cursor-pointer"
+          />
+        </a>
       </div>
 
       <div className="text-center py-2 md:py-4">
@@ -117,7 +133,24 @@ export default function OrientationGuide() {
             className="w-full rounded-lg border px-5 py-4 shadow-md text-lg bg-gray-800 text-white"
           />
 
-          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-800">
+          <div className="flex gap-2 mt-2">
+            {["all", "centennial", "lafayette"].map((loc) => (
+              <button
+                key={loc}
+                onClick={() => setSelectedLocation(loc)}
+                className={classNames(
+                  "px-4 py-2 rounded-lg text-sm font-semibold border",
+                  selectedLocation === loc
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-gray-800 text-gray-300 border-gray-700 hover:bg-gray-700"
+                )}
+              >
+                {loc.charAt(0).toUpperCase() + loc.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="overflow-y-auto max-h-80 border rounded-md p-3 text-sm bg-gray-800 mt-4">
             <h2 className="font-bold mb-2">📌 Phases</h2>
             <ul className="space-y-1">
               {uniquePhases.map((phase, i) => (
@@ -182,6 +215,15 @@ export default function OrientationGuide() {
                             <div className="text-left text-base font-bold">
                               {item.section}
                             </div>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                toggleFlag(itemIndex);
+                              }}
+                              className="text-sm text-yellow-400 hover:text-yellow-300 ml-auto"
+                            >
+                              {flaggedItems[itemIndex] ? "🔖 Bookmarked" : "🔖 Bookmark"}
+                            </button>
                           </div>
                         </AccordionTrigger>
                         <AccordionContent className="bg-gray-900 px-8 py-6">
@@ -191,15 +233,20 @@ export default function OrientationGuide() {
                                 <strong>Notes:</strong>
                                 <br /> {item.notes}
                               </p>
-                              {item.photo && item.photo.match(/^https?:\/\//i) && (
+                              {item.photos.length > 0 && (
                                 <div>
-                                  <strong>Photo:</strong>
-                                  <div className="mt-2">
-                                    <img
-                                      src={item.photo}
-                                      alt="Orientation step visual"
-                                      className="rounded-lg max-w-full h-auto border shadow-md"
-                                    />
+                                  <strong>Photos:</strong>
+                                  <div className="mt-2 overflow-x-auto whitespace-nowrap space-x-4 pb-2">
+                                    {item.photos.map((photo: string, i: number) => (
+                                      <img
+                                        key={i}
+                                        src={photo}
+                                        alt={`Step Visual ${i + 1}`}
+                                        onClick={() => setFullscreenImage(photo)}
+                                        className="inline-block h-auto max-h-60 rounded-lg border shadow-md cursor-pointer hover:scale-105 transition-transform"
+                                        style={{ maxWidth: "85%" }}
+                                      />
+                                    ))}
                                   </div>
                                 </div>
                               )}
@@ -215,20 +262,29 @@ export default function OrientationGuide() {
                                   </a>
                                 </p>
                               )}
-                              {[item.resource1, item.resource2, item.resource3].map(
-                                (res, i) =>
-                                  res && (
-                                    <p key={i}>
-                                      <a
-                                        href={res}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-blue-400 underline"
-                                      >
-                                        🔗 Additional Resource {i + 1}
-                                      </a>
-                                    </p>
-                                  )
+                              {item.resources.length > 0 && (
+                                <div>
+                                  <strong>Resources:</strong>
+                                  <ul className="list-disc list-inside space-y-1 mt-1">
+                                    {item.resources.map((res: string, i: number) => (
+                                      <li key={i}>
+                                        <a
+                                          href={res}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-blue-400 underline"
+                                        >
+                                          🔗 {res}
+                                        </a>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              {item.tags.length > 0 && (
+                                <p className="text-sm text-gray-400 pt-2">
+                                  <strong>Tags:</strong> {item.tags.join(", ")}
+                                </p>
                               )}
                             </CardContent>
                           </Card>
@@ -242,6 +298,19 @@ export default function OrientationGuide() {
           })}
         </div>
       </div>
+
+      {fullscreenImage && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
+          onClick={() => setFullscreenImage(null)}
+        >
+          <img
+            src={fullscreenImage}
+            alt="Full Screen"
+            className="max-h-full max-w-full rounded shadow-lg"
+          />
+        </div>
+      )}
     </div>
   );
 }
