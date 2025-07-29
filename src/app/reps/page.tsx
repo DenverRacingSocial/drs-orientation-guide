@@ -57,7 +57,7 @@ export default function OrientationGuide() {
               }));
             setOrientationData(cleaned);
           },
-          error: (err: Error) => {
+          error: (err: unknown) => {
             console.error("CSV parse error:", err);
           },
         });
@@ -120,7 +120,7 @@ export default function OrientationGuide() {
         </div>
 
         <div className="w-full md:w-2/3">
-          <Accordion type="multiple" className="space-y-6">
+          <Accordion type="multiple" className="space-y-6" defaultValue={filteredItems.map((_, i) => i.toString())}>
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
                 index === 0 || filteredItems[index - 1].phase !== item.phase;
@@ -142,7 +142,6 @@ export default function OrientationGuide() {
                   <AccordionItem
                     value={index.toString()}
                     className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200 dark:bg-gray-800"
-                    defaultOpen
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
@@ -152,12 +151,12 @@ export default function OrientationGuide() {
                           className="scale-125"
                         />
                         <div className="flex items-center gap-2 font-bold text-base text-left">
-                          {item.section}
                           {item.memberPerform && (
                             <span title="Member Performs">
                               <UserCircle className="text-green-600 size-4" />
                             </span>
                           )}
+                          {item.section}
                         </div>
                       </div>
                     </AccordionTrigger>
