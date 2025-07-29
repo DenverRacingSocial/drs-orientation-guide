@@ -52,7 +52,11 @@ export default function MemberOrientationGuide() {
                 notes: row["Detailed Steps/Notes"] ?? "",
                 photos: row["Photo"]?.split(",").map((p: string) => p.trim()) ?? [],
                 video: row["Video"] ?? "",
-                resources: [row["Additional Resource 1"], row["Additional Resource 2"], row["Additional Resource 3"]].filter(Boolean),
+                resources: [
+                  row["Additional Resource 1"],
+                  row["Additional Resource 2"],
+                  row["Additional Resource 3"]
+                ].filter(Boolean),
                 tags: row["Tags"]?.toLowerCase().split(",").map((t: string) => t.trim()) ?? [],
                 location: row["Location"]?.toLowerCase().trim() ?? "",
               }));
@@ -226,7 +230,7 @@ export default function MemberOrientationGuide() {
                                 <div>
                                   <strong>Resources:</strong>
                                   <ul className="list-disc list-inside space-y-1 mt-1">
-                                    {item.resources.map((res, i) => (
+                                    {item.resources.map((res: string, i: number) => (
                                       <li key={i}>
                                         <a
                                           href={res}
