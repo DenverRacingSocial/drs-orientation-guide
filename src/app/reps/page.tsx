@@ -28,6 +28,7 @@ export default function OrientationGuide() {
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
   const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
+  const [openItems, setOpenItems] = useState<string[]>([]);
 
   useEffect(() => {
     fetch(
@@ -54,6 +55,7 @@ export default function OrientationGuide() {
                 resource3: row["Additional Resource 3"] ?? "",
               }));
             setOrientationData(cleaned);
+            setOpenItems(cleaned.map((_, i) => i.toString()));
           },
           error: (err: unknown) => {
             console.error("CSV parse error:", err);
@@ -117,7 +119,8 @@ export default function OrientationGuide() {
           <Accordion
             type="multiple"
             className="space-y-6"
-            defaultValue={filteredItems.map((_, i) => i.toString())} // Ensure all are open
+            value={openItems} // Control expanded items
+            onValueChange={(vals) => setOpenItems(vals)}
           >
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
@@ -140,7 +143,6 @@ export default function OrientationGuide() {
                   <AccordionItem
                     value={index.toString()}
                     className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
-                    defaultValue={index.toString()}
                   >
                     <AccordionTrigger className="px-6 py-5">
                       <div className="flex items-center gap-4 w-full">
