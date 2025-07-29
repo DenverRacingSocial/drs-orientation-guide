@@ -56,7 +56,7 @@ export default function OrientationGuide() {
 
   const filteredItems = orientationData.filter((item) => {
     return (
-      true && // show everything on rep version
+      true &&
       `${item.phase} ${item.section} ${item.notes}`.toLowerCase().includes(query.toLowerCase())
     );
   });
@@ -82,7 +82,7 @@ export default function OrientationGuide() {
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
-            placeholder="🔍 Search steps or content..."
+            placeholder="🔍 Search notes or content..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full rounded-lg border px-5 py-4 shadow-md text-lg"
@@ -106,7 +106,7 @@ export default function OrientationGuide() {
         </div>
 
         <div className="w-full md:w-2/3">
-          <Accordion type="multiple" className="space-y-6">
+          <Accordion type="multiple" className="space-y-6" defaultValue={filteredItems.map((_, i) => i.toString())}>
             {filteredItems.map((item, index) => {
               const isFirstOfPhase =
                 index === 0 || filteredItems[index - 1].phase !== item.phase;
@@ -148,7 +148,7 @@ export default function OrientationGuide() {
                             <strong>Member Perform:</strong> {item.memberPerform ? "✅ Yes" : "❌ No"}
                           </p>
                           <p>
-                            <strong>Steps:</strong>
+                            <strong>Notes:</strong>
                             <br /> {item.notes}
                           </p>
                           {item.photo && (
