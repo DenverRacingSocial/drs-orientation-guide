@@ -27,6 +27,7 @@ export default function OrientationGuide() {
   const [query, setQuery] = useState("");
   const [orientationData, setOrientationData] = useState<any[]>([]);
   const [checkedItems, setCheckedItems] = useState<{ [key: number]: boolean }>({});
+  const [openItems, setOpenItems] = useState<string[]>([]);
   const phaseRefs = useRef<{ [phase: string]: HTMLDivElement | null }>({});
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export default function OrientationGuide() {
                 resource3: row["Additional Resource 3"] ?? "",
               }));
             setOrientationData(cleaned);
+            setOpenItems(cleaned.map((_, index) => index.toString()));
           },
           error: (err: unknown) => {
             console.error("CSV parse error:", err);
@@ -73,6 +75,7 @@ export default function OrientationGuide() {
 
   const toggleChecked = (index: number) => {
     setCheckedItems((prev) => ({ ...prev, [index]: !prev[index] }));
+    setOpenItems((prev) => prev.filter((val) => val !== index.toString()));
   };
 
   const scrollToPhase = (phase: string) => {
@@ -135,81 +138,84 @@ export default function OrientationGuide() {
                 <div className={classNames("sticky z-10 top-[11rem] px-4 py-2 rounded font-semibold border mb-4", phaseColor)}>
                   {phaseName}
                 </div>
-                <Accordion type="multiple" className="space-y-6" value={itemsInPhase.map((item) => orientationData.indexOf(item).toString())}>
-                  {itemsInPhase.map((item, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={orientationData.indexOf(item).toString()}
-                      className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
-                    >
-                      <AccordionTrigger className="px-6 py-5">
-                        <div className="flex items-center gap-4 w-full">
-                          {item.memberPerform && (
-                            <span title="Member Performs">
-                              <UserCircle className="text-green-600 size-4" />
-                            </span>
-                          )}
-                          <Checkbox
-                            checked={checkedItems[orientationData.indexOf(item)] || false}
-                            onCheckedChange={() => toggleChecked(orientationData.indexOf(item))}
-                            className="scale-125"
-                          />
-                          <div className="font-bold text-base text-left">
-                            {item.section}
+                <Accordion type="multiple" className="space-y-6" value={openItems}>
+                  {itemsInPhase.map((item, index) => {
+                    const itemIndex = orientationData.indexOf(item);
+                    return (
+                      <AccordionItem
+                        key={index}
+                        value={itemIndex.toString()}
+                        className="border rounded-xl bg-white shadow hover:shadow-md transition-shadow duration-200"
+                      >
+                        <AccordionTrigger className="px-6 py-5">
+                          <div className="flex items-center gap-4 w-full">
+                            {item.memberPerform && (
+                              <span title="Member Performs">
+                                <UserCircle className="text-green-600 size-4" />
+                              </span>
+                            )}
+                            <Checkbox
+                              checked={checkedItems[itemIndex] || false}
+                              onCheckedChange={() => toggleChecked(itemIndex)}
+                              className="scale-125"
+                            />
+                            <div className="font-bold text-base text-left">
+                              {item.section}
+                            </div>
                           </div>
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent className="bg-gray-50 px-8 py-6">
-                        <Card className="bg-white border-none shadow-none">
-                          <CardContent className="space-y-3">
-                            <p>
-                              <strong>Notes:</strong>
-                              <br /> {item.notes}
-                            </p>
-                            {item.photo && item.photo.match(/^https?:\/\//i) && (
-                              <div>
-                                <strong>Photo:</strong>
-                                <div className="mt-2">
-                                  <img
-                                    src={item.photo}
-                                    alt="Orientation step visual"
-                                    className="rounded-lg max-w-full h-auto border shadow-md"
-                                  />
-                                </div>
-                              </div>
-                            )}
-                            {item.video && (
+                        </AccordionTrigger>
+                        <AccordionContent className="bg-gray-50 px-8 py-6">
+                          <Card className="bg-white border-none shadow-none">
+                            <CardContent className="space-y-3">
                               <p>
-                                <a
-                                  href={item.video}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="text-blue-600 underline"
-                                >
-                                  🎥 Watch Video
-                                </a>
+                                <strong>Notes:</strong>
+                                <br /> {item.notes}
                               </p>
-                            )}
-                            {[item.resource1, item.resource2, item.resource3].map(
-                              (res, i) =>
-                                res && (
-                                  <p key={i}>
-                                    <a
-                                      href={res}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-blue-600 underline"
-                                    >
-                                      🔗 Additional Resource {i + 1}
-                                    </a>
-                                  </p>
-                                )
-                            )}
-                          </CardContent>
-                        </Card>
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
+                              {item.photo && item.photo.match(/^https?:\/\//i) && (
+                                <div>
+                                  <strong>Photo:</strong>
+                                  <div className="mt-2">
+                                    <img
+                                      src={item.photo}
+                                      alt="Orientation step visual"
+                                      className="rounded-lg max-w-full h-auto border shadow-md"
+                                    />
+                                  </div>
+                                </div>
+                              )}
+                              {item.video && (
+                                <p>
+                                  <a
+                                    href={item.video}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-600 underline"
+                                  >
+                                    🎥 Watch Video
+                                  </a>
+                                </p>
+                              )}
+                              {[item.resource1, item.resource2, item.resource3].map(
+                                (res, i) =>
+                                  res && (
+                                    <p key={i}>
+                                      <a
+                                        href={res}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-blue-600 underline"
+                                      >
+                                        🔗 Additional Resource {i + 1}
+                                      </a>
+                                    </p>
+                                  )
+                              )}
+                            </CardContent>
+                          </Card>
+                        </AccordionContent>
+                      </AccordionItem>
+                    );
+                  })}
                 </Accordion>
               </div>
             );
