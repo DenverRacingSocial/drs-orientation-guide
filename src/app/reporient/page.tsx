@@ -95,11 +95,11 @@ export default function OrientationGuide() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
-      <div className="flex flex-col items-center sticky top-0 z-40 py-2 md:py-4 bg-white dark:bg-gray-900 shadow-md border-b">
+      <div className="flex flex-col items-center z-40 py-2 md:py-4 bg-white dark:bg-gray-900">
         <img
           src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png"
           alt="DRS Logo"
-          className="w-28 mb-2"
+          className="w-28 mb-2 sticky top-0 z-40"
         />
       </div>
 
@@ -107,7 +107,7 @@ export default function OrientationGuide() {
         <h1 className="text-lg md:text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[5rem] md:top-[6rem] z-30 bg-white dark:bg-gray-900 py-4">
+      <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] md:top-[6.5rem] z-30 bg-white dark:bg-gray-900 py-4">
         <div className="w-full md:w-1/3 space-y-4">
           <Input
             type="text"
@@ -152,7 +152,7 @@ export default function OrientationGuide() {
                   phaseRefs.current[phaseName] = el;
                 }}
               >
-                <div className={classNames("sticky z-30 top-[5.5rem] md:top-[6rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
+                <div className={classNames("sticky z-30 top-[6rem] md:top-[6.5rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
