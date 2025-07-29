@@ -113,6 +113,13 @@ export default function OrientationGuide() {
               ))}
             </ul>
           </div>
+
+          <div className="border rounded-md p-3 text-sm bg-gray-100">
+            <h2 className="font-bold mb-2">🧾 Legend</h2>
+            <div className="flex items-center gap-2 text-sm text-gray-800">
+              <UserCircle className="text-green-600 size-4" /> = Member Performs
+            </div>
+          </div>
         </div>
 
         <div className="w-full md:w-2/3">
@@ -135,7 +142,7 @@ export default function OrientationGuide() {
                   }}
                 >
                   {isFirstOfPhase && (
-                    <div className={classNames("sticky top-[11rem] z-10 px-4 py-2 rounded font-semibold border mb-2", phaseColor)}>
+                    <div className={classNames("sticky z-10 top-[11rem] px-4 py-2 rounded font-semibold border mb-2", phaseColor)}>
                       {item.phase}
                     </div>
                   )}
