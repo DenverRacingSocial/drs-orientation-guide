@@ -79,10 +79,10 @@ export default function OrientationGuide() {
   };
 
   const handleToggle = (val: string) => {
+    const index = parseInt(val);
     setOpenItems((prev) =>
       prev.includes(val) ? prev.filter((v) => v !== val) : [...prev, val]
     );
-    const index = parseInt(val);
     if (!checkedItems[index]) {
       setCheckedItems((prev) => ({ ...prev, [index]: true }));
     }
@@ -95,12 +95,16 @@ export default function OrientationGuide() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 transition-all duration-300 min-h-screen bg-white text-black dark:bg-gray-900 dark:text-white">
-      <div className="flex flex-col items-center sticky top-0 bg-white dark:bg-gray-900 z-40 py-4 shadow-md border-b">
-        <img src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png" alt="DRS Logo" className="w-28 mb-2" />
+      <div className="flex flex-col items-center sticky top-0 z-40 py-4 bg-white dark:bg-gray-900 shadow-md border-b">
+        <img
+          src="https://static.wixstatic.com/media/8c955c_78a26ab0afde4ab098ff74f980cab626~mv2.png"
+          alt="DRS Logo"
+          className="w-28 mb-2"
+        />
       </div>
 
       <div className="text-center py-4">
-        <h1 className="text-2xl md:text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
+        <h1 className="text-xl md:text-3xl font-extrabold">VIP Orientation Guide (Rep View)</h1>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-[6rem] z-30 bg-white dark:bg-gray-900 py-4">
@@ -148,7 +152,7 @@ export default function OrientationGuide() {
                   phaseRefs.current[phaseName] = el;
                 }}
               >
-                <div className={classNames("sticky z-20 top-[7rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
+                <div className={classNames("sticky z-30 top-[6.5rem] px-4 py-2 rounded font-semibold border mb-4 text-lg", phaseColor)}>
                   {phaseName}
                 </div>
                 <Accordion type="multiple" className="space-y-6" value={openItems}>
@@ -182,7 +186,7 @@ export default function OrientationGuide() {
                         </AccordionTrigger>
                         <AccordionContent className="bg-white dark:bg-gray-800 px-8 py-6">
                           <Card className="bg-white dark:bg-gray-800 border-none shadow-none">
-                            <CardContent className="space-y-3">
+                            <CardContent className="space-y-3 text-black dark:text-white">
                               <p>
                                 <strong>Notes:</strong>
                                 <br /> {item.notes}
