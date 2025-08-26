@@ -7,115 +7,123 @@
 
 :root {
   --background: 0 0% 100%; /* Pure white background */
-  --foreground: 0 0% 3.9%; /* Deep black text for readability */
-  --card: 0 0% 100%; /* Soft white with hint of gold for glassmorphism */
-  --card-foreground: 0 0% 3.9%; /* Deep black text on cards */
-  --popover: 0 0% 100%; /* Very light background for popovers */
-  --popover-foreground: 0 0% 3.9%; /* Deep black text in popovers */
-  --primary: 47 96% 53%; /* Rich gold accent color */
-  --primary-foreground: 0 0% 98%; /* White text on primary elements */
-  --secondary: 60 5% 96%; /* Very light gold for secondary sections */
-  --secondary-foreground: 0 0% 9%; /* Deep black text for secondary */
-  --muted: 60 5% 96%; /* Light gray for muted elements */
-  --muted-foreground: 0 0% 45%; /* Medium gray for muted text */
-  --accent: 60 5% 96%; /* Same as primary for consistency */
-  --accent-foreground: 0 0% 9%; /* Black text on accent elements */
+  --foreground: 0 0% 0%; /* Pure black text for maximum contrast */
+  --card: 0 0% 100%; /* Pure white cards */
+  --card-foreground: 0 0% 0%; /* Pure black text on cards */
+  --popover: 0 0% 100%; /* Pure white popovers */
+  --popover-foreground: 0 0% 0%; /* Pure black text in popovers */
+  --primary: 45 93% 47%; /* Rich gold primary color */
+  --primary-foreground: 0 0% 100%; /* White text on gold */
+  --secondary: 45 15% 95%; /* Very light gold for secondary */
+  --secondary-foreground: 0 0% 0%; /* Black text for secondary */
+  --muted: 0 0% 96%; /* Light gray for muted elements */
+  --muted-foreground: 0 0% 40%; /* Dark gray for muted text */
+  --accent: 45 93% 47%; /* Same gold as primary */
+  --accent-foreground: 0 0% 100%; /* White text on accent */
   --destructive: 0 84% 60%; /* Red for destructive actions */
-  --destructive-foreground: 0 0% 98%; /* White text on destructive elements */
-  --border: 0 0% 89.8%; /* Light gray borders */
-  --input: 0 0% 89.8%; /* Light input backgrounds */
-  --ring: 47 96% 53%; /* Gold focus ring */
+  --destructive-foreground: 0 0% 100%; /* White text on destructive */
+  --border: 0 0% 85%; /* Light gray borders */
+  --input: 0 0% 98%; /* Very light input backgrounds */
+  --ring: 45 93% 47%; /* Gold focus ring */
   --radius: 0.625rem;
 }
 
 .dark {
-  --background: 0 0% 3.9%;
-  --foreground: 0 0% 98%;
-  --card: 0 0% 3.9%;
-  --card-foreground: 0 0% 98%;
-  --popover: 0 0% 3.9%;
-  --popover-foreground: 0 0% 98%;
-  --primary: 0 0% 98%;
-  --primary-foreground: 0 0% 9%;
-  --secondary: 0 0% 14.9%;
-  --secondary-foreground: 0 0% 98%;
-  --muted: 0 0% 14.9%;
-  --muted-foreground: 0 0% 63.9%;
-  --accent: 0 0% 14.9%;
-  --accent-foreground: 0 0% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 0 0% 98%;
-  --border: 0 0% 14.9%;
-  --input: 0 0% 14.9%;
-  --ring: 0 0% 83.1%;
+  --background: 0 0% 0%; /* Pure black background */
+  --foreground: 0 0% 100%; /* Pure white text */
+  --card: 0 0% 5%; /* Very dark gray cards */
+  --card-foreground: 0 0% 100%; /* White text on cards */
+  --popover: 0 0% 5%; /* Very dark gray popovers */
+  --popover-foreground: 0 0% 100%; /* White text in popovers */
+  --primary: 45 93% 47%; /* Same gold primary */
+  --primary-foreground: 0 0% 0%; /* Black text on gold */
+  --secondary: 0 0% 10%; /* Dark gray secondary */
+  --secondary-foreground: 0 0% 100%; /* White text for secondary */
+  --muted: 0 0% 10%; /* Dark gray muted */
+  --muted-foreground: 0 0% 65%; /* Light gray muted text */
+  --accent: 45 93% 47%; /* Same gold accent */
+  --accent-foreground: 0 0% 0%; /* Black text on accent */
+  --destructive: 0 62.8% 30.6%; /* Darker red */
+  --destructive-foreground: 0 0% 100%; /* White text */
+  --border: 0 0% 20%; /* Dark gray borders */
+  --input: 0 0% 10%; /* Dark input backgrounds */
+  --ring: 45 93% 47%; /* Gold focus ring */
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   body {
     @apply bg-background text-foreground;
-    /* Added subtle gradient background with gold tones */
-    background: linear-gradient(135deg, hsl(0 0% 100%), hsl(47 20% 98%), hsl(47 30% 96%));
+    /* Updated background to elegant black to gold gradient */
+    background: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 5%), hsl(45 20% 8%));
+    min-height: 100vh;
   }
 }
 
 @layer components {
-  /* Added glassmorphism components for white, black, and gold theme */
+  /* Updated glassmorphism components for black, white, and gold luxury theme */
   .glass-card {
-    @apply backdrop-blur-2xl border border-border/50 shadow-lg;
-    background: linear-gradient(135deg, hsl(0 0% 100% / 0.95), hsl(47 20% 98% / 0.9));
-    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.1), 0 0 0 1px hsl(47 96% 53% / 0.2), inset 0 1px 0 hsl(0 0% 100% / 0.9);
+    @apply backdrop-blur-2xl border shadow-lg;
+    background: linear-gradient(135deg, hsl(0 0% 100% / 0.95), hsl(45 20% 98% / 0.9));
+    border: 1px solid hsl(45 93% 47% / 0.3);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.2), 0 0 0 1px hsl(45 93% 47% / 0.4), inset 0 1px 0 hsl(0 0% 100% / 0.9);
   }
 
   .glass {
-    @apply backdrop-blur-md border border-border/40 shadow;
-    background: linear-gradient(135deg, hsl(0 0% 99% / 0.9), hsl(47 15% 97% / 0.8));
+    @apply backdrop-blur-md border shadow;
+    background: linear-gradient(135deg, hsl(0 0% 99% / 0.9), hsl(45 15% 97% / 0.8));
+    border: 1px solid hsl(45 93% 47% / 0.2);
     box-shadow: 0 4px 16px hsl(0 0% 0% / 0.1), inset 0 1px 0 hsl(0 0% 100% / 0.8);
   }
 
   .glass-nav {
-    @apply backdrop-blur-3xl border-b border-border/60;
-    background: linear-gradient(180deg, hsl(0 0% 100% / 0.98), hsl(47 20% 98% / 0.95));
-    box-shadow: 0 4px 24px hsl(0 0% 0% / 0.1), inset 0 1px 0 hsl(47 96% 53% / 0.3);
+    @apply backdrop-blur-3xl border-b;
+    background: linear-gradient(180deg, hsl(0 0% 100% / 0.98), hsl(45 20% 98% / 0.95));
+    border-bottom: 1px solid hsl(45 93% 47% / 0.3);
+    box-shadow: 0 4px 24px hsl(0 0% 0% / 0.1), inset 0 1px 0 hsl(45 93% 60% / 0.3);
   }
 
   .glass-input {
-    @apply backdrop-blur-sm border border-border bg-background/95 transition-all duration-300;
+    @apply backdrop-blur-sm border transition-all duration-300;
+    background: hsl(0 0% 100% / 0.95);
+    border: 1px solid hsl(0 0% 85%);
     box-shadow: inset 0 2px 4px hsl(0 0% 0% / 0.05);
   }
 
   .glass-input:focus {
-    @apply border-primary/50;
-    box-shadow: inset 0 2px 4px hsl(0 0% 0% / 0.05), 0 0 0 3px hsl(47 96% 53% / 0.3);
+    border: 1px solid hsl(45 93% 47% / 0.5);
+    box-shadow: inset 0 2px 4px hsl(0 0% 0% / 0.05), 0 0 0 3px hsl(45 93% 47% / 0.3);
   }
 
   .glass-button {
-    @apply text-primary-foreground border border-primary/30 shadow transition-all duration-300;
-    background: linear-gradient(135deg, hsl(47 96% 53%), hsl(45 93% 58%));
+    @apply text-white border shadow transition-all duration-300;
+    background: linear-gradient(135deg, hsl(45 93% 47%), hsl(45 93% 52%));
+    border: 1px solid hsl(45 93% 42%);
   }
 
   .glass-button:hover {
     @apply shadow-md -translate-y-0.5;
-    background: linear-gradient(135deg, hsl(47 96% 48%), hsl(47 96% 53%));
-    box-shadow: 0 8px 20px hsl(47 96% 53% / 0.3);
+    background: linear-gradient(135deg, hsl(45 93% 42%), hsl(45 93% 47%));
+    box-shadow: 0 8px 20px hsl(45 93% 47% / 0.4);
   }
 
   .glass-phase-header {
-    @apply backdrop-blur-md border border-primary/30 shadow-md text-primary-foreground;
-    background: linear-gradient(135deg, hsl(47 96% 53%), hsl(45 93% 58%));
-    box-shadow: 0 8px 20px hsl(47 96% 53% / 0.3), inset 0 1px 0 hsl(0 0% 100% / 0.2);
+    @apply backdrop-blur-md border shadow-md text-white;
+    background: linear-gradient(135deg, hsl(0 0% 0%), hsl(0 0% 10%), hsl(45 93% 47%));
+    border: 1px solid hsl(45 93% 47% / 0.5);
+    box-shadow: 0 8px 20px hsl(45 93% 47% / 0.3), inset 0 1px 0 hsl(45 93% 60% / 0.3);
   }
 }
 
 @layer utilities {
   .shadow-glass {
-    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.3), 0 0 0 1px hsl(47 96% 53% / 0.5), inset 0 1px 0 hsl(0 0% 100% / 0.8);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.3), 0 0 0 1px hsl(45 93% 47% / 0.5), inset 0 1px 0 hsl(0 0% 100% / 0.8);
   }
 
   .shadow-glass-lg {
-    box-shadow: 0 16px 48px hsl(0 0% 0% / 0.4), 0 0 0 1px hsl(47 96% 53% / 0.6), inset 0 2px 0 hsl(0 0% 100% / 0.9);
+    box-shadow: 0 16px 48px hsl(0 0% 0% / 0.4), 0 0 0 1px hsl(45 93% 47% / 0.6), inset 0 2px 0 hsl(0 0% 100% / 0.9);
   }
 
   .backdrop-blur-xs {

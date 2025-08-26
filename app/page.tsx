@@ -45,11 +45,11 @@ export default function HomePage() {
             alt="DRS Logo"
             className="w-32 md:w-40 mx-auto mb-8"
           />
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            DRS VIP Orientation
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-black via-gray-800 to-yellow-600 bg-clip-text text-transparent">
+            VIP Clubhouse Guide
           </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
-            Welcome to Denver Racing Social's comprehensive orientation guide system
+          <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto">
+            Welcome to Denver Racing Social's comprehensive VIP orientation system
           </p>
         </div>
 
@@ -59,8 +59,8 @@ export default function HomePage() {
             onClick={() => setCurrentView("rep")}
           >
             <CardHeader className="text-center pb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <Users className="w-8 h-8 text-primary-foreground" />
+              <div className="w-16 h-16 bg-gradient-to-r from-black to-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <Users className="w-8 h-8 text-white" />
               </div>
               <CardTitle className="text-2xl text-foreground">Representative View</CardTitle>
             </CardHeader>
@@ -71,15 +71,15 @@ export default function HomePage() {
               </p>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
                   <span>Progress tracking & checkboxes</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
                   <span>Member performance indicators</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
                   <span>Complete workflow visibility</span>
                 </div>
               </div>
@@ -91,8 +91,8 @@ export default function HomePage() {
             onClick={() => setCurrentView("member")}
           >
             <CardHeader className="text-center pb-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-accent to-primary rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <UserCheck className="w-8 h-8 text-primary-foreground" />
+              <div className="w-16 h-16 bg-gradient-to-r from-yellow-600 to-black rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <UserCheck className="w-8 h-8 text-white" />
               </div>
               <CardTitle className="text-2xl text-foreground">VIP Member View</CardTitle>
             </CardHeader>
@@ -103,15 +103,15 @@ export default function HomePage() {
               </p>
               <div className="space-y-2 text-sm text-muted-foreground">
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
                   <span>Customer-facing content only</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
                   <span>Simplified, member-focused view</span>
                 </div>
                 <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-accent rounded-full"></div>
+                  <div className="w-2 h-2 bg-yellow-600 rounded-full"></div>
                   <span>Essential resources & guides</span>
                 </div>
               </div>

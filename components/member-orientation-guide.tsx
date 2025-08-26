@@ -8,12 +8,12 @@ import { AlertCircle, RefreshCw } from "lucide-react"
 import classNames from "classnames"
 
 const phaseColors = [
-  "bg-gradient-to-r from-red-600 to-red-800",
+  "bg-gradient-to-r from-black to-gray-900",
+  "bg-gradient-to-r from-yellow-600 to-yellow-800",
+  "bg-gradient-to-r from-gray-800 to-black",
   "bg-gradient-to-r from-yellow-500 to-yellow-700",
-  "bg-gradient-to-r from-green-600 to-green-800",
-  "bg-gradient-to-r from-blue-600 to-blue-800",
-  "bg-gradient-to-r from-purple-600 to-purple-800",
-  "bg-gradient-to-r from-pink-600 to-pink-800",
+  "bg-gradient-to-r from-gray-900 to-gray-800",
+  "bg-gradient-to-r from-yellow-700 to-yellow-900",
 ]
 
 export default function MemberOrientationGuide() {
@@ -159,7 +159,7 @@ export default function MemberOrientationGuide() {
 
   if (isLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-background">
+      <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen">
         <div className="sticky top-0 z-50 glass-nav py-2 flex justify-center">
           <a href="#">
             <img
@@ -217,7 +217,7 @@ export default function MemberOrientationGuide() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-background">
+    <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-slate-50">
       <div className="sticky top-0 z-50 glass-nav py-2 flex justify-center">
         <a href="#">
           <img
@@ -264,7 +264,7 @@ export default function MemberOrientationGuide() {
                 <li key={i}>
                   <button
                     onClick={() => scrollToPhase(phase)}
-                    className="text-primary hover:underline w-full text-left"
+                    className="hover:underline w-full text-left"
                   >
                     {phase}
                   </button>

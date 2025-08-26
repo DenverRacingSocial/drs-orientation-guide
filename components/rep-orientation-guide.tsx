@@ -11,12 +11,12 @@ import { UserCircle, AlertCircle, RefreshCw, Lock, Search, Bookmark, MessageSqua
 import classNames from "classnames"
 
 const phaseColors = [
-  "glass-phase-header",
-  "glass-phase-header",
-  "glass-phase-header",
-  "glass-phase-header",
-  "glass-phase-header",
-  "glass-phase-header",
+  "bg-gradient-to-r from-black to-gray-900 text-white",
+  "bg-gradient-to-r from-yellow-600 to-yellow-800 text-white",
+  "bg-gradient-to-r from-gray-800 to-black text-white",
+  "bg-gradient-to-r from-yellow-500 to-yellow-700 text-black",
+  "bg-gradient-to-r from-gray-900 to-gray-800 text-white",
+  "bg-gradient-to-r from-yellow-700 to-yellow-900 text-white",
 ]
 
 export default function RepOrientationGuide() {
