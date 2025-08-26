@@ -364,7 +364,7 @@ export default function RepOrientationGuide() {
 
       <div className="max-w-7xl mx-auto px-4 pb-10 pt-6">
         <div className="text-center py-4 md:py-6">
-          <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2">VIP Orientation Guide</h1>
+          <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2">{"VIP Clubhouse Guide\n"}</h1>
           <p className="text-lg text-muted-foreground">Representative View</p>
         </div>
 
@@ -445,7 +445,7 @@ export default function RepOrientationGuide() {
                 >
                   <div
                     className={classNames(
-                      "sticky z-40 top-20 px-6 py-4 rounded-xl font-bold text-lg text-primary-foreground shadow-glass mb-6",
+                      "sticky z-40 top-24 md:top-28 px-6 py-4 rounded-xl font-bold text-lg text-primary-foreground shadow-glass mb-6",
                       phaseColor,
                     )}
                   >

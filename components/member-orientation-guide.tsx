@@ -229,7 +229,8 @@ export default function MemberOrientationGuide() {
       </div>
 
       <div className="text-center py-2 md:py-4">
-        <h1 className="text-md md:text-3xl font-extrabold text-foreground">VIP Orientation Guide</h1>
+        <h1 className="text-md md:text-3xl font-extrabold text-foreground">VIP Clubhouse Guide
+</h1>
       </div>
 
       <div className="flex flex-col md:flex-row gap-6 mb-10 sticky top-20 md:top-24 z-30 glass-nav py-4">
