@@ -4,26 +4,25 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to white, black, and gold color scheme */
   --background: oklch(1 0 0); /* Pure white background */
   --foreground: oklch(0.145 0 0); /* Deep black text for readability */
-  --card: oklch(0.98 0.01 60); /* Soft white with hint of gold for glassmorphism */
+  --card: oklch(1 0 0); /* Soft white with hint of gold for glassmorphism */
   --card-foreground: oklch(0.145 0 0); /* Deep black text on cards */
-  --popover: oklch(0.99 0.005 60); /* Very light background for popovers */
+  --popover: oklch(1 0 0); /* Very light background for popovers */
   --popover-foreground: oklch(0.145 0 0); /* Deep black text in popovers */
   --primary: oklch(0.205 0 0); /* Rich gold accent color */
   --primary-foreground: oklch(0.985 0 0); /* White text on primary elements */
   --secondary: oklch(0.97 0 0); /* Very light gold for secondary sections */
   --secondary-foreground: oklch(0.205 0 0); /* Deep black text for secondary */
-  --muted: oklch(0.95 0.01 240); /* Light gray for muted elements */
-  --muted-foreground: oklch(0.45 0 0); /* Medium gray for muted text */
+  --muted: oklch(0.97 0 0); /* Light gray for muted elements */
+  --muted-foreground: oklch(0.556 0 0); /* Medium gray for muted text */
   --accent: oklch(0.97 0 0); /* Same as primary for consistency */
   --accent-foreground: oklch(0.205 0 0); /* White text on accent elements */
-  --destructive: oklch(0.55 0.2 25); /* Soft red for destructive actions */
-  --destructive-foreground: oklch(0.55 0.2 25); /* White text on destructive elements */
+  --destructive: oklch(0.577 0.245 27.325); /* Soft red for destructive actions */
+  --destructive-foreground: oklch(0.577 0.245 27.325); /* White text on destructive elements */
   --border: oklch(0.922 0 0); /* Light gray borders */
   --input: oklch(0.922 0 0); /* White input backgrounds */
-  --ring: oklch(0.708 0 0 / 0.3); /* Gold focus ring */
+  --ring: oklch(0.708 0 0); /* Gold focus ring */
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -37,7 +36,7 @@
   --sidebar-accent: oklch(0.97 0 0); /* Gold sidebar accent */
   --sidebar-accent-foreground: oklch(0.205 0 0); /* White text on accent */
   --sidebar-border: oklch(0.922 0 0); /* Light gray sidebar border */
-  --sidebar-ring: oklch(0.708 0 0 / 0.3); /* Gold focus ring */
+  --sidebar-ring: oklch(0.708 0 0); /* Gold focus ring */
 }
 
 .dark {
@@ -117,12 +116,12 @@
 
 @layer base {
   * {
-    border-color: var(--border);
+    border-color: hsl(var(--border));
     outline-color: color-mix(in oklch, var(--ring), transparent 50%);
   }
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     /* Added subtle gradient background with gold tones */
     background: linear-gradient(135deg, oklch(1 0 0), oklch(0.98 0.01 60), oklch(0.96 0.02 60));
   }
