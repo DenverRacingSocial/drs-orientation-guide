@@ -6,38 +6,38 @@
 :root {
   /* Updated to white, black, and gold color scheme */
   --background: oklch(1 0 0); /* Pure white background */
-  --foreground: oklch(0.15 0 0); /* Deep black text for readability */
+  --foreground: oklch(0.145 0 0); /* Deep black text for readability */
   --card: oklch(0.98 0.01 60); /* Soft white with hint of gold for glassmorphism */
-  --card-foreground: oklch(0.15 0 0); /* Deep black text on cards */
+  --card-foreground: oklch(0.145 0 0); /* Deep black text on cards */
   --popover: oklch(0.99 0.005 60); /* Very light background for popovers */
-  --popover-foreground: oklch(0.15 0 0); /* Deep black text in popovers */
-  --primary: oklch(0.65 0.15 60); /* Rich gold accent color */
-  --primary-foreground: oklch(1 0 0); /* White text on primary elements */
-  --secondary: oklch(0.97 0.02 60); /* Very light gold for secondary sections */
-  --secondary-foreground: oklch(0.15 0 0); /* Deep black text for secondary */
+  --popover-foreground: oklch(0.145 0 0); /* Deep black text in popovers */
+  --primary: oklch(0.205 0 0); /* Rich gold accent color */
+  --primary-foreground: oklch(0.985 0 0); /* White text on primary elements */
+  --secondary: oklch(0.97 0 0); /* Very light gold for secondary sections */
+  --secondary-foreground: oklch(0.205 0 0); /* Deep black text for secondary */
   --muted: oklch(0.95 0.01 240); /* Light gray for muted elements */
   --muted-foreground: oklch(0.45 0 0); /* Medium gray for muted text */
-  --accent: oklch(0.65 0.15 60); /* Same as primary for consistency */
-  --accent-foreground: oklch(1 0 0); /* White text on accent elements */
+  --accent: oklch(0.97 0 0); /* Same as primary for consistency */
+  --accent-foreground: oklch(0.205 0 0); /* White text on accent elements */
   --destructive: oklch(0.55 0.2 25); /* Soft red for destructive actions */
-  --destructive-foreground: oklch(1 0 0); /* White text on destructive elements */
-  --border: oklch(0.9 0.005 240); /* Light gray borders */
-  --input: oklch(1 0 0); /* White input backgrounds */
-  --ring: oklch(0.65 0.15 60 / 0.3); /* Gold focus ring */
-  --chart-1: oklch(0.85 0.08 60);
-  --chart-2: oklch(0.8 0.1 60);
-  --chart-3: oklch(0.75 0.12 60);
-  --chart-4: oklch(0.7 0.14 60);
-  --chart-5: oklch(0.65 0.15 60);
+  --destructive-foreground: oklch(0.55 0.2 25); /* White text on destructive elements */
+  --border: oklch(0.922 0 0); /* Light gray borders */
+  --input: oklch(0.922 0 0); /* White input backgrounds */
+  --ring: oklch(0.708 0 0 / 0.3); /* Gold focus ring */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.625rem;
-  --sidebar: oklch(1 0 0); /* White sidebar */
-  --sidebar-foreground: oklch(0.15 0 0); /* Deep black sidebar text */
-  --sidebar-primary: oklch(0.97 0.02 60); /* Light gold sidebar accent */
-  --sidebar-primary-foreground: oklch(0.15 0 0); /* Deep black text */
-  --sidebar-accent: oklch(0.65 0.15 60); /* Gold sidebar accent */
-  --sidebar-accent-foreground: oklch(1 0 0); /* White text on accent */
-  --sidebar-border: oklch(0.9 0.005 240); /* Light gray sidebar border */
-  --sidebar-ring: oklch(0.65 0.15 60 / 0.3); /* Gold focus ring */
+  --sidebar: oklch(0.985 0 0); /* White sidebar */
+  --sidebar-foreground: oklch(0.145 0 0); /* Deep black sidebar text */
+  --sidebar-primary: oklch(0.205 0 0); /* Light gold sidebar accent */
+  --sidebar-primary-foreground: oklch(0.985 0 0); /* Deep black text */
+  --sidebar-accent: oklch(0.97 0 0); /* Gold sidebar accent */
+  --sidebar-accent-foreground: oklch(0.205 0 0); /* White text on accent */
+  --sidebar-border: oklch(0.922 0 0); /* Light gray sidebar border */
+  --sidebar-ring: oklch(0.708 0 0 / 0.3); /* Gold focus ring */
 }
 
 .dark {
@@ -76,6 +76,7 @@
 }
 
 @theme inline {
+  /* optional: --font-sans, --font-serif, --font-mono if they are applied in the layout.tsx */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -116,10 +117,12 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--ring), transparent 50%);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
     /* Added subtle gradient background with gold tones */
     background: linear-gradient(135deg, oklch(1 0 0), oklch(0.98 0.01 60), oklch(0.96 0.02 60));
   }
@@ -128,41 +131,52 @@
 @layer components {
   /* Added glassmorphism components for white, black, and gold theme */
   .glass-card {
-    @apply backdrop-blur-xl border border-border/50 shadow-lg;
+    backdrop-filter: blur(24px);
+    border: 1px solid color-mix(in oklch, var(--border), transparent 50%);
+    box-shadow: 0 4px 6px -1px color-mix(in oklch, black, transparent 90%), 0 2px 4px -2px
+      color-mix(in oklch, black, transparent 90%);
     background: linear-gradient(135deg, oklch(1 0 0 / 0.95), oklch(0.98 0.01 60 / 0.9));
     box-shadow: 0 8px 32px oklch(0.05 0 0 / 0.1), 0 0 0 1px oklch(0.65 0.15 60 / 0.2), inset 0 1px 0 oklch(1 0 0 / 0.9);
   }
 
   .glass {
-    @apply backdrop-blur-lg border border-border/40 shadow-md;
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in oklch, var(--border), transparent 60%);
+    box-shadow: 0 2px 4px -1px color-mix(in oklch, black, transparent 95%);
     background: linear-gradient(135deg, oklch(0.99 0 0 / 0.9), oklch(0.97 0.015 60 / 0.8));
     box-shadow: 0 4px 16px oklch(0.05 0 0 / 0.1), inset 0 1px 0 oklch(1 0 0 / 0.8);
   }
 
   .glass-nav {
-    @apply backdrop-blur-2xl border-b border-border/60;
+    backdrop-filter: blur(32px);
+    border-bottom: 1px solid color-mix(in oklch, var(--border), transparent 40%);
     background: linear-gradient(180deg, oklch(1 0 0 / 0.98), oklch(0.98 0.01 60 / 0.95));
     box-shadow: 0 4px 24px oklch(0.05 0 0 / 0.1), inset 0 1px 0 oklch(0.65 0.15 60 / 0.3);
   }
 
   .glass-input {
-    @apply backdrop-blur-sm border border-border focus:border-primary/50;
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--border);
     background: oklch(1 0 0 / 0.95);
     box-shadow: inset 0 2px 4px oklch(0.1 0 0 / 0.05), 0 0 0 0 oklch(0.65 0.15 60 / 0);
     transition: all 0.3s ease;
   }
 
   .glass-input:focus {
+    border-color: color-mix(in oklch, var(--primary), transparent 50%);
     box-shadow: inset 0 2px 4px oklch(0.1 0 0 / 0.05), 0 0 0 3px oklch(0.65 0.15 60 / 0.3);
   }
 
   .glass-button {
-    @apply text-primary-foreground border border-primary/30 shadow-md hover:shadow-lg;
+    color: var(--primary-foreground);
+    border: 1px solid color-mix(in oklch, var(--primary), transparent 70%);
+    box-shadow: 0 2px 4px -1px color-mix(in oklch, black, transparent 95%);
     background: linear-gradient(135deg, oklch(0.65 0.15 60), oklch(0.7 0.14 60));
     transition: all 0.3s ease;
   }
 
   .glass-button:hover {
+    box-shadow: 0 4px 6px -1px color-mix(in oklch, black, transparent 90%);
     transform: translateY(-1px);
     background: linear-gradient(135deg, oklch(0.6 0.16 60), oklch(0.65 0.15 60));
     box-shadow: 0 8px 20px oklch(0.65 0.15 60 / 0.3);
@@ -170,7 +184,10 @@
 
   .glass-phase-header {
     background: linear-gradient(135deg, oklch(0.65 0.15 60), oklch(0.7 0.14 60));
-    @apply backdrop-blur-lg border border-primary/30 shadow-lg text-primary-foreground;
+    backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in oklch, var(--primary), transparent 70%);
+    box-shadow: 0 4px 6px -1px color-mix(in oklch, black, transparent 90%);
+    color: var(--primary-foreground);
     box-shadow: 0 8px 20px oklch(0.65 0.15 60 / 0.3), inset 0 1px 0 oklch(1 0 0 / 0.2);
   }
 }
