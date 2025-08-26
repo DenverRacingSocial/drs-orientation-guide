@@ -445,7 +445,7 @@ export default function RepOrientationGuide() {
                 >
                   <div
                     className={classNames(
-                      "sticky z-30 top-20 px-6 py-4 rounded-xl font-bold text-lg text-primary-foreground shadow-glass mb-6",
+                      "sticky z-40 top-20 px-6 py-4 rounded-xl font-bold text-lg text-primary-foreground shadow-glass mb-6",
                       phaseColor,
                     )}
                   >

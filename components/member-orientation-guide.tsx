@@ -217,7 +217,7 @@ export default function MemberOrientationGuide() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen bg-slate-50">
+    <div className="max-w-7xl mx-auto px-4 pb-10 pt-2 transition-all duration-300 min-h-screen">
       <div className="sticky top-0 z-50 glass-nav py-2 flex justify-center">
         <a href="#">
           <img
